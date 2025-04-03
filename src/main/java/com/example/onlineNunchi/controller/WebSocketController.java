@@ -1,9 +1,15 @@
 package com.example.onlineNunchi.controller;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.onlineNunchi.escaperoom.GameRoom;
+import com.example.onlineNunchi.escaperoom.GameRoomManager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class WebSocketController {
 
-    private final WebSocketHandler webSocketHandler;
+    private final GameRoomManager gameRoomManager;
 
     @GetMapping("/connect")
     public ResponseEntity<String> connect() {
@@ -23,8 +29,26 @@ public class WebSocketController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<String> getStatus() {
-        // 현재 연결된 세션 수 등을 반환할 수 있습니다.
-        return ResponseEntity.ok("웹소켓 서버가 정상적으로 동작 중입니다.");
+    public ResponseEntity<Map<String, Object>> getStatus() {
+        Map<String, Object> status = Map.of(
+            "activeRooms", gameRoomManager.getGameRooms().size(),
+            "totalPlayers", gameRoomManager.getGameRooms().values().stream()
+                .mapToInt(GameRoom::getPlayerCount)
+                .sum()
+        );
+        return ResponseEntity.ok(status);
+    }
+
+    @GetMapping("/rooms")
+    public ResponseEntity<Map<String, Object>> getRooms() {
+        Map<String, Object> rooms = gameRoomManager.getGameRooms().values().stream()
+            .collect(Collectors.toMap(
+                GameRoom::getRoomId,
+                room -> Map.of(
+                    "playerCount", room.getPlayerCount(),
+                    "isFull", room.isFull()
+                )
+            ));
+        return ResponseEntity.ok(Map.of("rooms", rooms));
     }
 } 
