@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/ws")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class WebSocketController {
 
@@ -25,7 +25,7 @@ public class WebSocketController {
     @GetMapping("/connect")
     public ResponseEntity<String> connect() {
         log.info("웹소켓 연결 요청");
-        return ResponseEntity.ok("웹소켓 연결이 준비되었습니다. ws://your-server:port/ws 로 연결하세요.");
+        return ResponseEntity.ok("ws://localhost:8080/ws");
     }
 
     @GetMapping("/status")
