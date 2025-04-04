@@ -8,17 +8,20 @@ import org.springframework.web.socket.WebSocketSession;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class GameRoomManager {
     @Getter
     private final ConcurrentHashMap<String, GameRoom> gameRooms = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, String> sessionRoomMap = new ConcurrentHashMap<>();
+    private final MazeGenerator mazeGenerator;
 
     public GameRoom createRoom() {
         String roomId = UUID.randomUUID().toString();
-        GameRoom room = new GameRoom(roomId);
+        GameRoom room = new GameRoom(roomId, mazeGenerator);
         gameRooms.put(roomId, room);
         log.info("새로운 게임방 생성: {}", roomId);
         return room;
