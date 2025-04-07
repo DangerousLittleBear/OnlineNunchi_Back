@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class MazeGenerator {
-    private static final int GRID_ROWS = 20;     // 세로 길이 (행의 수)
-    private static final int GRID_COLUMNS = 30;  // 가로 길이 (열의 수)
+    private static final int GRID_ROWS = 21;     // 세로 길이 (행의 수)
+    private static final int GRID_COLUMNS = 31;  // 가로 길이 (열의 수)
     private static final int WALL = 1;
     private static final int PASSAGE = 0;
     private static final Random random = new Random();
@@ -36,7 +36,7 @@ public class MazeGenerator {
 
             // 입구와 출구 설정
             maze[0][0] = PASSAGE;
-            maze[GRID_ROWS-1][GRID_COLUMNS-1] = PASSAGE; // 출구
+            maze[GRID_ROWS-2][GRID_COLUMNS-2] = PASSAGE; // 출구
 
             // 벽을 장애물로 변환
             List<Map<String, Object>> obstacles = new ArrayList<>();
@@ -94,6 +94,7 @@ public class MazeGenerator {
                 if (c < GRID_COLUMNS - 2 && maze[r][c + 2] == WALL) {
                     wallList.add(new AbstractMap.SimpleEntry<>(new Cell(r, c), new Cell(r, c + 2)));
                 }
+
 
                 // 벽을 통로로 변경
                 maze[r][c] = PASSAGE;
