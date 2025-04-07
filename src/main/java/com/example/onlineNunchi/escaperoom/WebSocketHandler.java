@@ -71,6 +71,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                     // 모든 플레이어의 위치 정보를 전송
                     Map<String, Object> response = new HashMap<>();
                     response.put("type", "POSITION_UPDATE");
+                    response.put("roomId", room.getPlayerCount());
                     response.put("position", room.getSharedPosition());
                     String responseMessage = objectMapper.writeValueAsString(response);
                     room.broadcastMessage(responseMessage);

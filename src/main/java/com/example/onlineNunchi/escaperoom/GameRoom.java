@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.Random;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.LinkedList;
+
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,8 +21,8 @@ public class GameRoom {
     private Map<String, Object> sharedPosition;
     private List<Map<String, Object>> obstacles;
     private static final int MAX_PLAYERS = 5;
-    private static final int GRID_X_SIZE = 30;
-    private static final int GRID_Y_SIZE = 20;
+    private static final int GRID_X_SIZE = 31;
+    private static final int GRID_Y_SIZE = 21;
 
     public GameRoom(String roomId, MazeGenerator mazeGenerator) {
         this.roomId = roomId;
