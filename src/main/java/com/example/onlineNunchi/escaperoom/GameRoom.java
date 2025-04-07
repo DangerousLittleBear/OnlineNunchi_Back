@@ -24,7 +24,8 @@ public class GameRoom {
     private Map<String, Object> sharedPosition;
     private List<Map<String, Object>> obstacles;
     private static final int MAX_PLAYERS = 5;
-    private static final int GRID_SIZE = 20;
+    private static final int GRID_X_SIZE = 30;
+    private static final int GRID_Y_SIZE = 20;
 
     public GameRoom(String roomId, MazeGenerator mazeGenerator) {
         this.roomId = roomId;
@@ -72,7 +73,7 @@ public class GameRoom {
         }
         
         // 경계 체크
-        if(newX < 0 || newY < 0 || newX >= GRID_SIZE || newY >= GRID_SIZE) {
+        if(newX < 0 || newY < 0 || newX >= GRID_X_SIZE || newY >= GRID_Y_SIZE) {
             log.info("위치가 범위를 벗어났습니다. 이동할 수 없습니다.");
             return;
         }
